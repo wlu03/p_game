@@ -1,6 +1,6 @@
-// All 42 probability events for the market-making simulator
+// All probability events for the market-making simulator
 export const allEvents = [
-  // Coin events
+  // ===== COIN EVENTS =====
   { name: "3 Heads in a Row (3 flips)", trueProb: 0.125, category: "COIN" },
   { name: "At Least 2 Tails in 5 Flips", trueProb: 1 - (Math.pow(0.5, 5) + 5 * Math.pow(0.5, 5)), category: "COIN" },
   { name: "Exactly 1 Head in 4 Flips", trueProb: 4 * 0.5 * Math.pow(0.5, 3), category: "COIN" },
@@ -8,7 +8,17 @@ export const allEvents = [
   { name: "More Heads Than Tails (5 Flips)", trueProb: 0.5, category: "COIN" },
   { name: "No Heads in 3 Flips", trueProb: 0.125, category: "COIN" },
   { name: "Alternating H/T in 4 Flips", trueProb: 2 * Math.pow(0.5, 4), category: "COIN" },
-  // Dice events
+  { name: "Exactly 2 Heads in 5 Flips", trueProb: 10 * Math.pow(0.5, 5), category: "COIN" },
+  { name: "At Least 1 Head in 6 Flips", trueProb: 1 - Math.pow(0.5, 6), category: "COIN" },
+  { name: "Exactly 3 Heads in 6 Flips", trueProb: 20 * Math.pow(0.5, 6), category: "COIN" },
+  { name: "No Tails in 5 Flips", trueProb: Math.pow(0.5, 5), category: "COIN" },
+  { name: "First and Last Flip Same (4 Flips)", trueProb: 0.5, category: "COIN" },
+  { name: "At Most 1 Head in 5 Flips", trueProb: (1 + 5) * Math.pow(0.5, 5), category: "COIN" },
+  { name: "Exactly 4 Tails in 7 Flips", trueProb: 35 * Math.pow(0.5, 7), category: "COIN" },
+  { name: "Heads on Both 1st and 2nd Flip", trueProb: 0.25, category: "COIN" },
+  { name: "Run of 2+ Same Side in 3 Flips", trueProb: 0.75, category: "COIN" },
+
+  // ===== DICE EVENTS =====
   { name: "Roll a 6 (Single Die)", trueProb: 1 / 6, category: "DICE" },
   { name: "Sum of 2 Dice > 8", trueProb: 10 / 36, category: "DICE" },
   { name: "Rolling Doubles (2 Dice)", trueProb: 6 / 36, category: "DICE" },
@@ -18,7 +28,21 @@ export const allEvents = [
   { name: "Sum of 3 Dice ≥ 15", trueProb: 20 / 216, category: "DICE" },
   { name: "No 6s in 4 Rolls", trueProb: Math.pow(5 / 6, 4), category: "DICE" },
   { name: "Exactly Two 6s in 5 Rolls", trueProb: 10 * Math.pow(1 / 6, 2) * Math.pow(5 / 6, 3), category: "DICE" },
-  // Card events
+  { name: "Roll Odd Number (Single Die)", trueProb: 3 / 6, category: "DICE" },
+  { name: "Sum of 2 Dice ≤ 4", trueProb: 6 / 36, category: "DICE" },
+  { name: "Sum of 2 Dice is Even", trueProb: 18 / 36, category: "DICE" },
+  { name: "At Least One 6 in 2 Rolls", trueProb: 1 - Math.pow(5 / 6, 2), category: "DICE" },
+  { name: "Both Dice ≤ 3 (2 Dice)", trueProb: Math.pow(3 / 6, 2), category: "DICE" },
+  { name: "Sum of 2 Dice = 12", trueProb: 1 / 36, category: "DICE" },
+  { name: "Max of 2 Dice ≥ 5", trueProb: 1 - Math.pow(4 / 6, 2), category: "DICE" },
+  { name: "Exactly One 1 in 4 Rolls", trueProb: 4 * (1 / 6) * Math.pow(5 / 6, 3), category: "DICE" },
+  { name: "Sum of 2 Dice is Prime", trueProb: 15 / 36, category: "DICE" },
+  { name: "All 3 Dice Different (3 Dice)", trueProb: (6 / 6) * (5 / 6) * (4 / 6), category: "DICE" },
+  { name: "Roll ≥ 4 (Single Die)", trueProb: 3 / 6, category: "DICE" },
+  { name: "Sum of 3 Dice = 10", trueProb: 27 / 216, category: "DICE" },
+  { name: "No Repeats in 2 Rolls", trueProb: 5 / 6, category: "DICE" },
+
+  // ===== CARD EVENTS =====
   { name: "Draw an Ace (from 52)", trueProb: 4 / 52, category: "CARD" },
   { name: "Draw a Red Card", trueProb: 26 / 52, category: "CARD" },
   { name: "Draw a Face Card (J/Q/K)", trueProb: 12 / 52, category: "CARD" },
@@ -28,11 +52,38 @@ export const allEvents = [
   { name: "Draw 2 Cards, Same Suit", trueProb: 4 * (13 / 52) * (12 / 51), category: "CARD" },
   { name: "Draw a Prime Number Card (2,3,5,7)", trueProb: 16 / 52, category: "CARD" },
   { name: "Draw King or Queen", trueProb: 8 / 52, category: "CARD" },
-  // Mixed / advanced
+  { name: "Draw a Heart", trueProb: 13 / 52, category: "CARD" },
+  { name: "Draw a Number Card (2-10)", trueProb: 36 / 52, category: "CARD" },
+  { name: "Draw a Card ≤ 5", trueProb: 16 / 52, category: "CARD" },
+  { name: "Draw a Black Face Card", trueProb: 6 / 52, category: "CARD" },
+  { name: "Draw 2 Cards, At Least 1 Ace", trueProb: 1 - (48 / 52) * (47 / 51), category: "CARD" },
+  { name: "Draw 2 Cards, Both Same Color", trueProb: 2 * (26 / 52) * (25 / 51), category: "CARD" },
+  { name: "Draw a Card Divisible by 3 (3,6,9)", trueProb: 12 / 52, category: "CARD" },
+  { name: "Draw Jack of Spades", trueProb: 1 / 52, category: "CARD" },
+  { name: "Draw a Card ≥ 7 (7,8,9,10,J,Q,K,A)", trueProb: 32 / 52, category: "CARD" },
+  { name: "Draw 2 Cards, Both Face Cards", trueProb: (12 / 52) * (11 / 51), category: "CARD" },
+  { name: "Draw an Even Number Card (2,4,6,8,10)", trueProb: 20 / 52, category: "CARD" },
+  { name: "Draw 3 Cards, All Different Suits", trueProb: (52 / 52) * (39 / 51) * (26 / 50), category: "CARD" },
+
+  // ===== MIXED / ADVANCED =====
   { name: "Heads AND Die > 4", trueProb: 0.5 * (2 / 6), category: "MIXED" },
   { name: "Tails OR Die = 1", trueProb: 0.5 + 1 / 6 - (0.5 * 1 / 6), category: "MIXED" },
   { name: "Red Card AND Heads", trueProb: 0.5 * 0.5, category: "MIXED" },
   { name: "Die ≤ 2 AND Card is Ace", trueProb: (2 / 6) * (4 / 52), category: "MIXED" },
   { name: "At Least 1 of: Heads, Die=6, Ace", trueProb: 1 - 0.5 * (5 / 6) * (48 / 52), category: "MIXED" },
   { name: "Heads AND Die > 2 AND Red Card", trueProb: 0.5 * (4 / 6) * 0.5, category: "MIXED" },
+  { name: "Tails AND Die = 6", trueProb: 0.5 * (1 / 6), category: "MIXED" },
+  { name: "Heads OR Red Card", trueProb: 0.5 + 0.5 - 0.5 * 0.5, category: "MIXED" },
+  { name: "Die Even AND Card is Black", trueProb: (3 / 6) * (26 / 52), category: "MIXED" },
+  { name: "Heads AND Die ≤ 3 AND Spade", trueProb: 0.5 * (3 / 6) * (13 / 52), category: "MIXED" },
+  { name: "Tails OR Die > 4 OR Face Card", trueProb: 1 - 0.5 * (4 / 6) * (40 / 52), category: "MIXED" },
+  { name: "Die = 1 AND Ace of Spades", trueProb: (1 / 6) * (1 / 52), category: "MIXED" },
+  { name: "Heads AND Card > 5", trueProb: 0.5 * (32 / 52), category: "MIXED" },
+  { name: "All 3 Happen: Heads, Die Odd, Red Card", trueProb: 0.5 * 0.5 * 0.5, category: "MIXED" },
+  { name: "None Happen: No Heads, No 6, No Ace", trueProb: 0.5 * (5 / 6) * (48 / 52), category: "MIXED" },
+  // P(exactly 1) = P(H only) + P(6 only) + P(A only)
+  // = 0.5*(5/6)*(48/52) + 0.5*(1/6)*(48/52) + 0.5*(5/6)*(4/52)
+  { name: "Exactly 1 of: Heads, Die=6, Ace", trueProb: 0.5 * (5 / 6) * (48 / 52) + 0.5 * (1 / 6) * (48 / 52) + 0.5 * (5 / 6) * (4 / 52), category: "MIXED" },
+  { name: "Die > Card Value (Card 1-6 only)", trueProb: 15 / (6 * 24), category: "MIXED" },
+  { name: "Heads XOR Die Even", trueProb: 0.5 * 0.5 + 0.5 * 0.5, category: "MIXED" },
 ];
