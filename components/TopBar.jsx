@@ -6,7 +6,7 @@ export default function TopBar({ round, timeLeft, balance, totalPnL }) {
   return (
     <div style={styles.topBar}>
       <div style={styles.topLeft}>
-        <div style={styles.topLogo}>◈ PROB EXCHANGE</div>
+        <div style={styles.topLogo}>◈ MARKET MAKING SIMULATOR</div>
         <div style={styles.roundBadge}>ROUND {round}</div>
       </div>
       <div style={styles.topCenter}>

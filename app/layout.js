@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Prob Exchange — Probability Market Making Simulator",
+  title: "Market Making Simulator",
   description: "Test your probability estimation skills in this market-making trading game",
 };
 

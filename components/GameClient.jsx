@@ -2,20 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import { ROUND_TIME, INITIAL_BALANCE } from "@/lib/constants";
-import { placeTrade, resolveRound } from "@/lib/game-logic";
+import { generateEvents, placeTrade, resolveRound } from "@/lib/game-logic";
 import { saveSettings, loadSettings, saveLastScore, loadLastScore } from "@/lib/storage";
 import MenuScreen from "./MenuScreen";
 import PlayingScreen from "./PlayingScreen";
 import ResultsScreen from "./ResultsScreen";
 import GameOverScreen from "./GameOverScreen";
-
-function logEvent(type, data) {
-  fetch("/api/events", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ type, data }),
-  }).catch(() => {});
-}
 
 export default function GameClient() {
   const [screen, setScreen] = useState("menu");
@@ -32,8 +24,6 @@ export default function GameClient() {
   const [showTrueProbs, setShowTrueProbs] = useState(false);
   const [lastScore, setLastScore] = useState(null);
   const timerRef = useRef(null);
-  // Track trueProbs separately (fetched with debug param, kept client-side for reveal)
-  const trueProbsRef = useRef({});
 
   // Load settings + last score from localStorage on mount
   useEffect(() => {
@@ -61,29 +51,8 @@ export default function GameClient() {
     }
   }, [screen, timeLeft]);
 
-  async function fetchEvents() {
-    try {
-      // Fetch without true probs for the game
-      const res = await fetch("/api/questions");
-      const data = await res.json();
-
-      // Also fetch with true probs for resolution
-      const resTrue = await fetch("/api/questions?includeTrue=1");
-      const dataTrue = await resTrue.json();
-
-      // We need the same events, so we'll generate once server-side
-      // Instead, let's use a single fetch that includes trueProb but we
-      // hide it in the UI until revealed
-      return dataTrue;
-    } catch {
-      // Fallback to client-side generation if API fails
-      const { generateEvents } = await import("@/lib/game-logic");
-      return generateEvents();
-    }
-  }
-
-  async function startGame() {
-    const newEvents = await fetchEvents();
+  function startGame() {
+    const newEvents = generateEvents();
     setBalance(INITIAL_BALANCE);
     setRound(1);
     setPositions({});
@@ -94,21 +63,12 @@ export default function GameClient() {
     setEvents(newEvents);
     setTimeLeft(ROUND_TIME);
     setScreen("playing");
-
-    logEvent("game_start", { balance: INITIAL_BALANCE });
   }
 
   function handleTrade(eventId, side) {
     const result = placeTrade(positions, eventId, side, events, tradeSize, balance);
     setPositions(result.positions);
     setBalance(result.balance);
-
-    logEvent("trade", {
-      eventId,
-      side,
-      tradeSize,
-      eventName: events.find((e) => e.id === eventId)?.name,
-    });
   }
 
   function handleResolve() {
@@ -125,13 +85,6 @@ export default function GameClient() {
     setPeakBalance((p) => Math.max(p, newBalance));
     setPositions({});
 
-    logEvent("round_resolve", {
-      round,
-      roundPnL,
-      newBalance,
-      tradeCount: tradeResults.length,
-    });
-
     if (newBalance <= 0) {
       finishGame(newBalance, newTotal, round);
       setScreen("gameover");
@@ -140,16 +93,14 @@ export default function GameClient() {
     }
   }
 
-  async function nextRound() {
-    const newEvents = await fetchEvents();
+  function nextRound() {
+    const newEvents = generateEvents();
     setRound((r) => r + 1);
     setEvents(newEvents);
     setTimeLeft(ROUND_TIME);
     setResolutions(null);
     setShowTrueProbs(false);
     setScreen("playing");
-
-    logEvent("round_start", { round: round + 1 });
   }
 
   function endGame() {
@@ -166,18 +117,6 @@ export default function GameClient() {
     };
     saveLastScore(score);
     setLastScore(score);
-
-    // Record score to backend
-    fetch("/api/scores", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...score,
-        roundHistory: [...roundHistory, { round: roundsPlayed, pnl: 0, balance: finalBalance }],
-      }),
-    }).catch(() => {});
-
-    logEvent("game_end", score);
   }
 
   if (screen === "menu") {

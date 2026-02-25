@@ -9,8 +9,7 @@ export default function MenuScreen({ onStart, lastScore }) {
         <div style={styles.menuGlow} />
         <div style={styles.logoBlock}>
           <div style={styles.logoIcon}>◈</div>
-          <h1 style={styles.title}>PROB EXCHANGE</h1>
-          <div style={styles.subtitle}>PROBABILITY MARKET MAKING SIMULATOR</div>
+          <h1 style={styles.title}>MARKET MAKING SIMULATOR</h1>
         </div>
 
         {lastScore && (

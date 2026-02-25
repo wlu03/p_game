@@ -217,8 +217,7 @@ export default function ProbabilityMarketGame() {
           <div style={styles.menuGlow} />
           <div style={styles.logoBlock}>
             <div style={styles.logoIcon}>◈</div>
-            <h1 style={styles.title}>PROB EXCHANGE</h1>
-            <div style={styles.subtitle}>PROBABILITY MARKET MAKING SIMULATOR</div>
+            <h1 style={styles.title}>MARKET MAKING SIMULATOR</h1>
           </div>
           <div style={styles.rulesBox}>
             <div style={styles.rulesTitle}>HOW IT WORKS</div>
@@ -361,7 +360,7 @@ export default function ProbabilityMarketGame() {
       {/* TOP BAR */}
       <div style={styles.topBar}>
         <div style={styles.topLeft}>
-          <div style={styles.topLogo}>◈ PROB EXCHANGE</div>
+          <div style={styles.topLogo}>◈ MARKET MAKING SIMULATOR</div>
           <div style={styles.roundBadge}>ROUND {round}</div>
         </div>
         <div style={styles.topCenter}>
